@@ -1,9 +1,14 @@
 package Perlbal::Plugin::Rule;
 
+use 5.6;
+
 use strict;
 use warnings;
 
 use Perlbal;
+
+our $VERSION = "0.00_01";
+$VERSION = eval $VERSION;
 
 sub load {
     my $class = shift;
