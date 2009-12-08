@@ -7,7 +7,7 @@ use warnings;
 
 use Perlbal;
 
-our $VERSION = "0.00_01";
+our $VERSION = "0.00_02";
 $VERSION = eval $VERSION;
 
 sub load {
