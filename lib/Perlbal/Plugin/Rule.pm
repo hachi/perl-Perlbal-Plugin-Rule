@@ -1,6 +1,6 @@
 package Perlbal::Plugin::Rule;
 
-use 5.6;
+use 5.006;
 
 use strict;
 use warnings;
