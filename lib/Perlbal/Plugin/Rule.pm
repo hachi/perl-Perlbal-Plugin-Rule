@@ -6,6 +6,7 @@ use strict;
 use warnings;
 
 use Perlbal;
+use Perlbal::Plugin::Rule::Sugar;
 
 our $VERSION = "0.00_02";
 $VERSION = eval $VERSION;
@@ -22,11 +23,16 @@ sub load {
 
                 return $mc->err("'$value' is not a readable file") unless -r $value;
 
-                my $selector = do $value;
+                my $selector;
+                {
+                    package Perlbal::Plugin::Rule::Sugar;
+                    $selector = do $value;
+                }
 
                 return $mc->err("Error while loading from '$value': $!") if $!;
                 return $mc->err("Error while compiling from '$value': $@") if $@;
-                return $mc->err("We didn't get a coderef from '$value'") if ref($selector) ne 'CODE';
+                $selector ||= $Perlbal::Plugin::Rule::Sugar::RULE;
+                return $mc->err("We didn't get a rule from '$value'") if ref($selector) ne 'CODE';
 
                 $service->selector($selector);
                 $service->{extra_config}->{'rule_file'} = $value;
